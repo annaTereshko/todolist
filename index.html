@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Start</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href = "css/style.css" rel = "stylesheet">
+        
+        <script src = "js/Ajax.js" type="text/javascript"></script>
+        <script src = "js/jquery-3.4.1.js" type="text/javascript"></script>
+        <script type="text/javascript">
+         
+	       
+          window.addEventListener('load', function(){ 
+
+              
+           
+            
+            var bearImg = document.getElementById('bear');
+            document.getElementById('bear').src ='img/bear'+level+'.png';
+            document.getElementById('image').appendChild(bearImg); 
+              
+            document.getElementById('button-add-task').addEventListener('click', makeColor);
+              
+            document.getElementById('button-add-task').addEventListener('click', saveTasks);
+            document.getElementById('hide-completed-tasks').addEventListener('change', hideCompletedTasks);
+         
+          
+              
+    
+        
+         });
+            
+            
+            
+        var level=0;
+        var score=0;   
+        var tasksArr = [];
+        var randomColor;
+        var zaehler=0;
+        var plusScore=10;
+        var divsArray = document.getElementsByClassName('tasksDivs');
+        var tasksArray = document.getElementsByClassName('tasksText');
+            
+        
+            
+        function zufall(min,max) {
+             
+             min=Math.ceil(min);
+             max=Math.ceil(max);
+             return Math.floor(Math.random()*(max-min+1)) + min;
+         } 
+        //Zufallsfarbe generieren für Tasks Hintergrund
+            
+        function makeColor(){
+            
+            let r = zufall(0,255);
+            let g = zufall(0,255);
+            let b = zufall(0,255);
+            let a = 0.2;
+            
+            randomColor = 'rgba(' + r + ',' + g + ',' + b + ',' + a +')';
+            
+        }
+            
+            
+            
+            
+         //Tasks im input Feld generieren und im tasks-container speichern
+        function saveTasks(e){   
+            
+            var InputTask = document.getElementById('input-add-task').value;  
+            tasksArr.push(InputTask);
+            
+            if(InputTask.length>0){
+            
+                document.getElementById('input-add-task').value = '';
+            
+                var tasksDivs = document.createElement('div');
+                tasksDivs.className='tasksDivs';
+                tasksDivs.setAttribute('data-nr', zaehler);
+                
+                var tasksText = document.createElement('div');
+                tasksText.innerHTML=InputTask;
+                tasksText.className='tasksText';
+                tasksText.setAttribute('data-nr', zaehler);
+                
+                var ImagesDiv = document.createElement('div');
+                ImagesDiv.className='ImagesDiv';
+                
+                var checkmark = document.createElement('img');
+                checkmark.className="task-images";
+                checkmark.id="checkmark";
+                checkmark.src="img/checkmark.png";
+                checkmark.setAttribute('data-nr', zaehler);
+                
+                var notebook = document.createElement('img');
+                notebook.className="task-images";
+                notebook.id="notebook";
+                notebook.setAttribute('data-nr', zaehler);
+                notebook.src="img/notebook.png";
+                
+                var cross = document.createElement('img');
+                cross.className="task-images";
+                cross.id="cross"
+                cross.setAttribute('data-nr', zaehler);
+                cross.src="img/cross.png";
+            
+            
+                document.getElementById('tasks-container').appendChild(tasksDivs);
+                tasksDivs.appendChild(tasksText);
+                tasksDivs.appendChild(ImagesDiv);
+                ImagesDiv.appendChild(checkmark);
+                ImagesDiv.appendChild(notebook);
+                ImagesDiv.appendChild(cross);
+                
+                
+              
+                tasksDivs.style.backgroundColor=randomColor;
+                
+                zaehler+=1;
+            
+            }
+            
+         
+  
+            //damit das Input nicht leer abgeschickt wird
+            else{
+                
+                e.preventDefault();
+            }
+            
+                
+
+                //Event Listener auf Icons einbinden
+            
+                checkmark.addEventListener('click', strikeThrough); 
+                notebook.addEventListener('click', editText); 
+                cross.addEventListener('click', deleteTasks);
+        };
+            
+            
+       
+            
+            
+            
+            
+            
+            
+        // Hier wird beim Klicken auf das Häkchen  Symbol der task Text durchgestrichen 
+            
+        function strikeThrough(){
+            
+            var dataNr = this.getAttribute('data-nr');
+            
+            console.log(tasksArray);
+            
+            for(let task of tasksArray){
+                
+                var taskNummer = task.getAttribute('data-nr');
+                
+                
+                if(taskNummer==dataNr){
+                    
+                    
+                    task.style.textDecoration='line-through';
+                    score+=5;
+                    document.getElementById('score').innerHTML='SCORE : ' + score;
+            
+                    
+                };
+            };
+            
+            
+            //der durchgestrichenen Task eine Klasse vergeben, um ihn später ausbländen zu können
+            
+   
+            
+            for(let div of divsArray){
+                
+                var child= div.firstChild;
+                var divNummer = div.getAttribute('data-nr');
+                console.log(child.style.textDecoration)
+                if(divNummer==dataNr){ 
+                    
+                    div.className += " done";
+               
+                    this.removeEventListener('click', strikeThrough) //Um wiederholte Score Punkte für eine Task zu vermeiden
+            
+                };
+                
+            
+            };
+            
+            
+            //Level und Score aktualisieren
+            
+              if(score==plusScore){
+      
+                level+=1;
+                  
+                  
+                document.getElementById('level').innerHTML='LEVEL : ' +level;
+                
+                
+      
+                document.getElementById('bear').src ='img/bear'+level+'.png';
+      
+                plusScore=plusScore*2;
+            };
+       
+            
+        };
+            
+          
+                
+                
+                
+                
+                
+                
+
+        //  Hier wird beim Klicken auf das Kreuz Symbol der task Text gelöscht
+            
+         function deleteTasks(){
+             
+            var dataNr = this.getAttribute('data-nr');
+            
+    
+            
+            
+            for(let div of divsArray){
+                
+                var taskNummer = div.getAttribute('data-nr');
+                
+                if(taskNummer==dataNr){
+                    
+                    document.getElementById('tasks-container').removeChild(div);
+            
+                    
+                };
+            };
+            
+        };
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            
+         //Wenn Checkbox gechecked ist werden die Tasks ausgeblendet.   
+            
+        function hideCompletedTasks(){
+            
+            var checkBox = document.getElementById('hide-completed-tasks');
+            var DoneTasks=document.getElementsByClassName('done');
+
+
+                
+                
+                for(let task of DoneTasks){
+                    
+                    
+                    if (checkBox.checked){
+                    
+                    task.style.display='none';
+                    }else{
+                        
+                        task.style.display='flex';
+                        
+                    }
+            
+                };   
+        
+        };
+                
+                
+                
+                
+        var NewDataNr;   
+                
+      //hier werden Tasks ins inputFeld übertragen um sie edetieren zu können. 
+             
+        function editText(){
+            
+            var NewDataNr = this.getAttribute('data-nr');
+            NewArray = Array.from(tasksArray);
+            
+            for(let task of NewArray){
+                
+                
+                var taskNummer = task.getAttribute('data-nr');
+                
+              
+                
+                if(taskNummer==NewDataNr){
+                    
+                    
+                    document.getElementById('add-task').style.display="block";
+                    var editedTask=document.getElementById('input-add-task');
+                    editedTask.value=task.innerHTML;
+                    task.className="edited";
+                    
+                    //Wenn die Aufgabe korrigiert ist wird sie auf der richtige Stelle neu gespeichert
+                    document.getElementById('button-add-task').removeEventListener('click', saveTasks);
+                    
+                    document.getElementById('button-add-task').addEventListener('click', function(){
+                    console.log(NewArray);
+                         console.log(NewDataNr);
+                        
+                        
+                    NewArray[NewDataNr].innerHTML=document.getElementById('input-add-task').value;
+                        
+                    
+                    document.getElementById('input-add-task').value = '';
+                    this.removeEventListener('click', arguments.callee);
+                    document.getElementById('button-add-task').addEventListener('click', saveTasks);
+                    document.getElementById('checkmark').addEventListener('click',strikeThrough)
+                        
+                    });
+              
+                };
+            };
+        };
+            
+            
+
+        
+                
+                
+                
+                
+                
+                
+            
+        //Hier wird beim Klicken auf "Add task" button die Add Task Box animiert.
+            
+        $(document).ready(function(){
+            $('#add-button').on('click', function(){
+            $('#add-task').slideToggle(500);
+            $(this).toggleClass('active');
+            });
+            
+            
+             
+       });
+            
+            
+          
+    
+
+              
+
+        </script>
+		
+	</head>
+	<body>
+        <div class="header">
+        
+                
+            <div id="image"><img id="bear"></div>
+            <div id="level">LEVEL : 0</div>
+            <div id="score">SCORE : 0</div>
+            
+            
+        </div>
+        <div class="container">
+            
+                <button id="add-button">Add task</button>
+          
+                <label class="hide-label" >Hide completed tasks
+                    <input type="checkbox" id="hide-completed-tasks">
+              
+                </label>
+                
+            
+            
+        <div id="add-task">
+            
+            
+            <input type="text" id="input-add-task" placeholder="New Todo" name="addTodo">
+            <button id="button-add-task">Submit</button>
+            
+          
+          
+        </div>
+    
+            <div id="tasks-container">
+            
+        
+            
+            
+            </div>
+         
+	   </div>
+        
+     
+	</body>
+</html>
+

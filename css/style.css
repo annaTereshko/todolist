@@ -1,0 +1,238 @@
+body{
+    
+    background-color: #323440;
+    margin-top: 10%;
+}
+
+
+.container{
+    
+    width:70%;
+    height:auto;
+    margin: auto;
+    text-align: center;
+    background-color:#ffffff;
+    padding-bottom: 40px;
+    position: relative;
+    margin-bottom: 50px;
+
+
+
+}
+
+.header{
+     
+    width:70%;
+    height:auto;
+    margin: auto;
+    background-color:#1ab7e6;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+    
+   
+    
+}
+
+#score, #level{
+    
+    margin-right:70px;
+    color:white;
+    font-size: 20px;
+   
+    
+    
+    
+}
+
+#bear{
+    
+    
+    height:70px;
+    margin: 20px 60px 0 50px;
+   
+}
+
+
+
+#add-button{
+    
+    margin:20px 0 15px 0;
+    height: 40px;
+    width: 118px;
+    border-radius: 5%;
+    background-color: mediumseagreen;
+    border:none;
+    font-size: 1em;
+    color:white;
+    margin-right: 250px;
+}
+
+#add-task{  
+    width:62%;
+    height:130px;
+    background-color: rgba(186, 233, 247, 1);
+    margin:auto;
+    display: none;
+
+   
+}
+
+#input-add-task{
+    
+    margin-top:8%;
+    width:50%;
+    height: 40px;
+    border: 1px solid grey;
+    border-radius: 3px;
+    padding-left:3%;
+    box-sizing: border-box;
+    color: rgba(94, 204, 237, 1);
+
+
+}
+
+
+#button-add-task{
+    
+     background-color: #1ab7e6;
+     border-radius: 3px;
+     opacity: 1;
+     border:none;
+     color:white;
+     height:40px;
+     width: 30%;
+}
+
+
+
+.hide-label{
+    
+    color:#1ab7e6;
+    margin-right: 10px;
+
+}
+
+.tasksDivs{
+    
+    display:flex;
+    width:60%;
+    margin: auto;
+    margin-top:15px;
+    padding:10px 10px;
+    justify-content: space-between;
+    
+    
+    
+}
+
+.task-images{
+    
+
+    height:20px;
+    margin-right:5px;
+    cursor: pointer;
+    
+}
+
+
+.tasksText{
+    
+  
+    width:78%;
+    text-align: left;
+    
+}
+
+
+
+.ImagesDiv{
+    
+   
+    width:20%;
+   
+}
+
+@media only screen and (max-width: 1065px){
+    
+
+.header{
+        
+    display:block;  
+  
+
+        
+    }
+    
+   
+#bear, #add-button, #input-add-task, #button-add-task, .hide-label{
+    
+    
+    display: block;
+    margin: 0 auto;
+
+
+        
+    }
+
+    
+    
+#score, #level{
+    
+    margin-right:auto;
+    text-align:center;
+    margin-bottom:20px;
+    border-bottom: 1px solid white;
+  
+    
+}
+    
+ #image, .hide-label{
+        
+      padding: 10px 0;  
+        
+    }
+    
+#add-task{
+        
+        width:100%;
+        padding-top:1em;
+      
+    }
+    
+
+#input-add-task, #button-add-task{
+        
+        display:block;
+        width:80%;
+        margin-top:1em;
+
+    }
+    
+.tasksDivs{
+        
+    width:90%;
+        
+    } 
+    
+.container{
+        
+    padding-top:20px;
+    }
+    
+    
+    
+.task-images{
+    
+    display:flex;
+    flex-direction: column;
+    
+}    
+
+}
+
+
+
+
+
+
